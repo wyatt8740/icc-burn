@@ -1,10 +1,9 @@
 # icc-burn
 
-This permanently burns an ICC profile correction into an image. Nice for brute
-forcing color management onto wallpapers, software without color management,
-and so forth. Just don't use the images on any other screens, ever.
-
-:)
+This permanently **(and irreversibly)** burns an ICC profile correction into
+an image. Nice for brute forcing color management onto wallpapers, in software
+without color management, and so forth. Just don't use the images on any other
+screens, ever. :)
 
 Written as a proof of concept for possibly adding color management to MComix.
 Doesn't seem like it'll be that hard after all!
