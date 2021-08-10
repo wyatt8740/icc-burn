@@ -28,7 +28,10 @@ if input_file is None:
     exit(1)
 
 # convert to RGB (convert() will just copy the image if it is already RGB).
-input_file=input_file.convert('RGB')
+if 'A' in input_file.mode:
+    input_file=input_file.convert('RGBA')
+else:
+    input_file=input_file.convert('RGB')
 
 # default to srgb
 if icc_in is None:
