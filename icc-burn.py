@@ -27,6 +27,10 @@ if input_file is None:
     print("E: Could not open input image.")
     exit(1)
 
+# check if indexed, convert to RGB
+if input_file.getpalette() is not None:
+    input_file=input_file.convert('RGB')
+
 # default to srgb
 if icc_in is None:
     if input_file.info.get('icc_profile') is not None:
