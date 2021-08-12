@@ -1,13 +1,26 @@
 # icc-burn
 
-This permanently **(and irreversibly)** burns an ICC profile correction into
-an image. Nice for brute forcing color management onto wallpapers, in software
-without color management, and so forth. Just don't use the images on any other
-screens, ever. :)
+This permanently **(and irreversibly)** bakes an ICC profile's color
+corrections into an image. Nice for brute forcing color management onto
+wallpapers, in software without color management, and so forth. Just don't
+use the images on any other screens, ever, or try to view them in any properly
+color managed programs. :)
+
+Using images that have had ICC corrections baked in with color managed software
+will get the same corrections applied a second time and therefore look wrong.
+The only real use-case for this is viewing images in non-managed software
+(setting desktop wallpapers is a great example of where this is harmless,
+except that your screenshots will look wrong on other screens).
 
 Written as a proof of concept for possibly adding color management to MComix.
 Doesn't seem like it'll be that hard after all!
 
+## Dependencies
+
+* Python 3
+* Pillow (Don't use PIL; it's been dead for a decade).
+
+## Notes
 
 The ICC files here are ones I made for my own personal use. They are included
 for testing purposes, but if you want to try them on your screens you can go
