@@ -68,7 +68,10 @@ Then, copy the `lut.glslp` shader preset to some new file (maybe
 `my-monitor-lut.glslp`) and edit the new file so that the reference to `16.png`
 is replaced with your burned-in version.
 
-To use a different size LUT (e.g. 32 or 64-bit), first copy `reshade/lut.glslp` to some other filename
+To use a different size LUT (e.g. 32 or 64-bit), there's a parameter you can
+set in Retroarch called 'LUT Size.' Alternatively, you can edit the files.
+
+To edit the files, first copy `reshade/lut.glslp` to some other filename
 (maybe `lut64.glslp` for instance). Then, edit your new file. Change the
 reference to `shaders/LUT/16.png` to be to the LUT png you want to use, and
 copy `shaders/LUT/LUT.glsl to some new filename (maybe `LUT64.glsl`). Edit
