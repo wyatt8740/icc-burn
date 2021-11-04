@@ -8,7 +8,7 @@ from pillow_lut import load_cube_file
 
 parser=argparse.ArgumentParser(description='Burns ICC profiles into images.')
 parser.add_argument('--icc_in', dest='icc_in', type=str, nargs=1, default=None,
-                    help='ICC file to apply to the input. If none given, sRGB is automatically assumed (currently, embedded profiles are ignored and will need to be extracted from the image in advance).')
+                    help='ICC file to apply to the input. If none given, sRGB is automatically assumed (unless there is an embedded profile).')
 parser.add_argument('cube_out', metavar='cube_out', type=str, nargs=1,
                     help='cube file to apply to the output.')
 parser.add_argument('input_file', metavar='infile', type=str, nargs=1,
