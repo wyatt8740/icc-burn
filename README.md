@@ -15,10 +15,19 @@ except that your screenshots will look wrong on other screens).
 Written as a proof of concept for possibly adding color management to MComix.
 Doesn't seem like it'll be that hard after all!
 
+I have since also created a variant that applies a 3D lookup table on images.
+Currently, it expects (and is therefore limited to) images in the sRGB gamut.
+It will not behave properly on wider gamut images without some small changes.
+This is for simplicity on my end, since cube files do not contain metadata
+to specify what their source color space is.
+On images with wider gamuts, they will first be converted to sRGB and then have
+the lookup table applied.
+
 ### Dependencies
 
 * Python 3
 * Pillow (Don't use PIL; it's been dead for a decade).
+* (for the cube burner only) pillow_lut
 
 ### Notes
 
