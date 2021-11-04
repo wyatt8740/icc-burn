@@ -2,24 +2,30 @@
 import argparse
 from io import BytesIO # for BytesIO on embedded profiles
 from PIL import Image, ImageCms
+
+# .cube LUT support
+from pillow_lut import load_cube_file
+
 parser=argparse.ArgumentParser(description='Burns ICC profiles into images.')
 parser.add_argument('--icc_in', dest='icc_in', type=str, nargs=1, default=None,
-                    help='ICC file to apply to the input. If none given, sRGB is automatically assumed unless there is an embedded profile.')
-parser.add_argument('icc_out', metavar='icc_out', type=str, nargs=1,
-                    help='ICC file to apply to the output.')
+                    help='ICC file to apply to the input. If none given, sRGB is automatically assumed (currently, embedded profiles are ignored and will need to be extracted from the image in advance).')
+parser.add_argument('cube_out', metavar='cube_out', type=str, nargs=1,
+                    help='cube file to apply to the output.')
 parser.add_argument('input_file', metavar='infile', type=str, nargs=1,
                     help='The file that needs an ICC profile burned into it.')
 parser.add_argument('output_file', metavar='outfile', type=str, nargs=1,
                     help='Where to place the picture with the burned-in profile.')
-parser.add_argument('--reverse', dest='reverse', action='store_true', default=False, help='Try to reverse the applied correction instead (inverse matrix).')
 
 args=parser.parse_args()
-reverse=args.reverse
 icc_in=args.icc_in
 if args.icc_in is not None:
     icc_in=args.icc_in[0]
 
-icc_out=args.icc_out[0]
+cube_out=args.cube_out[0]
+cubelut=None
+if cube_out is not None:
+    cubelut=load_cube_file(cube_out)
+
 input_file=args.input_file[0]
 output_file=args.output_file[0]
 
@@ -41,16 +47,11 @@ if icc_in is None:
     else:
         icc_in=ImageCms.createProfile("sRGB", -1)
 
-xform=None
-if reverse:
-    print("Reverse mode.")
-    xform=ImageCms.buildTransform(icc_out, icc_in,
-                              input_file.mode, input_file.mode,
-                              ImageCms.INTENT_PERCEPTUAL, 0)
-else:
-    xform=ImageCms.buildTransform(icc_in, icc_out,
+srgb_default_profile=ImageCms.createProfile("sRGB", -1)
+        
+xform=ImageCms.buildTransform(icc_in, srgb_default_profile,
                               input_file.mode, input_file.mode,
                               ImageCms.INTENT_PERCEPTUAL, 0)
 
-img2=ImageCms.applyTransform(input_file, xform, inPlace=False)
+img2=ImageCms.applyTransform(input_file, xform, inPlace=False).filter(cubelut)
 img2.save(output_file)
