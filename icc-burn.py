@@ -4,7 +4,7 @@ from argparse import RawTextHelpFormatter
 from io import BytesIO # for BytesIO on embedded profiles
 from PIL import Image, ImageCms
 
-intent=ImageCms.INTENT_SATURATION
+intent=ImageCms.Intent.SATURATION
 
 parser=argparse.ArgumentParser(description='Burns ICC profiles into images.', formatter_class=RawTextHelpFormatter)
 parser.add_argument('--icc_in', dest='icc_in', type=str, nargs=1, default=None,
@@ -61,12 +61,12 @@ if reverse:
     xform=ImageCms.buildTransform(icc_out, icc_in,
                               input_file.mode, input_file.mode,
                               intent, 0)
-#                              ImageCms.INTENT_PERCEPTUAL, 0)
+#                              ImageCms.Intent.PERCEPTUAL, 0)
 else:
     xform=ImageCms.buildTransform(icc_in, icc_out,
                               input_file.mode, input_file.mode,
                               intent, 0)
-#                              ImageCms.INTENT_PERCEPTUAL, 0)
+#                              ImageCms.Intent.PERCEPTUAL, 0)
 
 
 img2=ImageCms.applyTransform(input_file, xform, inPlace=False)
